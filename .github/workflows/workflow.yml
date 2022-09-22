@@ -96,7 +96,7 @@ jobs:
       - name: Override default configuration
         run: |
           set -v
-          CONFIG_OVERRIDE="
+          echo "NODE_CONFIG=
             {
               \"pipeline\": {
                   \"source\": {
@@ -135,9 +135,9 @@ jobs:
                   }
               }
             }
-          "
-          echo "NODE_CONFIG=\"${CONFIG_OVERRIDE}\"" >> $GITHUB_ENV
-          cat $GITHUB_ENV
+          " >> $GITHUB_ENV
+          #echo "NODE_CONFIG=\"${CONFIG_OVERRIDE}\"" >> $GITHUB_ENV
+          #cat $GITHUB_ENV
 
       - name: Get the code
         uses: actions/checkout@v2
