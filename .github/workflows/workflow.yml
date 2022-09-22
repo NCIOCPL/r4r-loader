@@ -161,6 +161,7 @@ jobs:
         shell: bash --noprofile --norc -o pipefail {0}
         run: |
               ## Run Karate
+              export KARATE_ESHOST="http://localhost:${{ job.services.elasticsearch.ports[9200] }}"
               cd integration-tests && ./bin/karate ./features
               ## Store the exit code off so we can pass this step and
               ## capture the test output in the next step, but still
