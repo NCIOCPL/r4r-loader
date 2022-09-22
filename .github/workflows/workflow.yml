@@ -95,8 +95,22 @@ jobs:
 
       - name: Override default configuration
         run: |
-          set -v
-          echo "NODE_CONFIG=
+
+      - name: Get the code
+        uses: actions/checkout@v2
+
+      - name: Set up node
+        uses:  actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Install packages
+        run:  |
+          npm ci
+
+      - name: Run the loader to put data in Elasticsearch.
+        run:  |
+          export NODE_CONFIG="
             {
               \"pipeline\": {
                   \"source\": {
@@ -135,24 +149,7 @@ jobs:
                   }
               }
             }
-          " >> $GITHUB_ENV
-          #echo "NODE_CONFIG=\"${CONFIG_OVERRIDE}\"" >> $GITHUB_ENV
-          #cat $GITHUB_ENV
-
-      - name: Get the code
-        uses: actions/checkout@v2
-
-      - name: Set up node
-        uses:  actions/setup-node@v3
-        with:
-          node-version: 16
-
-      - name: Install packages
-        run:  |
-          npm ci
-
-      - name: Run the loader to put data in Elasticsearch.
-        run:  |
+          "
           echo "-----------"
           echo "CN: ${NODE_CONFIG}"
           echo "-----------"
