@@ -4,7 +4,7 @@ on:
   ## development branches. No sense in a dev building every
   ## time they push for a PR and no one should be working on
   ## common branches in their fork.
-  push:
+  #push:
     #branches:
       #- master
       #- develop
@@ -149,7 +149,7 @@ jobs:
           echo "-----------"
           echo "CN: ${NODE_CONFIG}"
           echo "-----------"
-          # node index.js
+          node index.js
 
       - name: Run tests to check whether data was loaded as expected.
         run: |
