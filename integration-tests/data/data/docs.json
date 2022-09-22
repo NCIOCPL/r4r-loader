@@ -1,0 +1,16 @@
+[
+    { "label": "Center for Biomedical Informatics and Informatics Technology (CBIIT)", "value": "cbiit" },
+    { "label": "Division of Cancer Treatment and Diagnosis (DCTD)", "value": "dctd" },
+    { "label": "Center for Cancer Genomics (CCG)", "value": "ccg" },
+    { "label": "Division of Cancer Control and Population Sciences (DCCPS)", "value": "dccps" },
+    { "label": "Division of Cancer Biology (DCB)", "value": "dcb" },
+    { "label": "Division of Cancer Epidemiology and Genetics (DCEG)", "value": "dceg" },
+    { "label": "Division of Cancer Prevention (DCP)", "value": "dcp" },
+    { "label": "Center for Strategic Scientific Initiatives (CSSI)", "value": "cssi" },
+    { "label": "Office of Cancer Clinical Proteomics Research (OCCPR)", "value": "occpr" },
+    { "label": "Office of Extramural Research (OER)", "value": "oer" },
+    { "label": "Office of Communications & Public Liaison (OCPL)", "value": "ocpl" },
+    { "label": "Office of Cancer Genomics (OCG)", "value": "ocg" },
+    { "label": "Informatics Technology for Cancer Research (ITCR)", "value": "itcr" },
+    { "label": "Center for Research Strategy (CCR)", "value": "ccr" }
+]
