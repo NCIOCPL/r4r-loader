@@ -112,7 +112,7 @@ jobs:
                   \"source\": {
                       \"module\": \"./lib/sources/github-resource-source\",
                       \"config\": {
-                          \"repoUrl\": \"https://github.com/blairl-nih/r4r-loader\",
+                          \"repoUrl\": \"https://github.com/nciocpl/r4r-loader\",
                           \"branchName\": \"ticket/8-es-update\",
                           \"resourcesPath\": \"/integration-tests/data/resources\",
                           \"authentication\": {
@@ -125,10 +125,10 @@ jobs:
                           \"module\": \"./lib/transformers/netlifymd-resource-transformer\",
                           \"config\": {
                             \"mappingUrls\": {
-                                \"docs\": \"https://raw.githubusercontent.com/blairl-nih/r4r-content/master/data/docs.json\",
-                                \"researchAreas\": \"https://raw.githubusercontent.com/blairl-nih/r4r-content/master/data/researchAreas.json\",
-                                \"researchTypes\": \"https://raw.githubusercontent.com/blairl-nih/r4r-content/master/data/researchTypes.json\",
-                                \"toolTypes\": \"https://raw.githubusercontent.com/blairl-nih/r4r-content/master/data/toolTypes.json\"
+                                \"docs\": \"https://raw.githubusercontent.com/nciocpl/r4r-content/integration-tests/data/data/docs.json\",
+                                \"researchAreas\": \"https://raw.githubusercontent.com/nciocpl/r4r-content/integration-tests/data/data/researchAreas.json\",
+                                \"researchTypes\": \"https://raw.githubusercontent.com/nciocpl/r4r-content/integration-tests/data/data/researchTypes.json\",
+                                \"toolTypes\": \"https://raw.githubusercontent.com/nciocpl/r4r-content/integration-tests/data/data/toolTypes.json\"
                             }
                           }
                       }
