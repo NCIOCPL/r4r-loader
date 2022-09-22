@@ -11,17 +11,17 @@ Resources for Researchers Prototype Importer
 
 ## Configuration Information
 The configuration file is based on the https://github.com/NCIOCPL/loader-pipeline library.  For the R4R Loader we have implemented the following pipeline steps:
-### Source 
-* **GithubResourceSource** - This class pulls the content from a Github Repository 
+### Source
+* **GithubResourceSource** - This class pulls the content from a Github Repository
   * Input: N/A
   * Output: This returns an array of the *fetched* documents in git.
   * Configuration:
     * `repoUrl` : (required) The git repo where the content resides.
     * `resourcesPath`: (required) The path within the repo to the resources.
     * `branchName` : (default: master) The branch to use.
-    * `authentication` : (optional) Git authentication configuration. See https://github.com/octokit/rest.js#authentication for options, but token authentication is what has been tested. If no authentication is defined, then the source will use the public API, which has IP source address limits.   
+    * `authentication` : (optional) Git authentication configuration. See https://github.com/octokit/rest.js#authentication for options, but token authentication is what has been implemented. If no authentication is defined, then the source will use the public API, which has IP source address limits.
 ### Transformers:
-* **NetlifyMDResourceTransformer** - Transforms documents in Markdown with YML Front-matter format conforming to the r4r-content schema (https://github.com/NCIOCPL/r4r-content/blob/master/admin/config.yml) the  
+* **NetlifyMDResourceTransformer** - Transforms documents in Markdown with YML Front-matter format conforming to the r4r-content schema (https://github.com/NCIOCPL/r4r-content/blob/master/admin/config.yml) the
   * Input: An array of documents that follow the r4r-content schema
   * Output: A single record in a format expected by the ElasticResourceLoader
   * Configuration:
@@ -40,7 +40,7 @@ The configuration file is based on the https://github.com/NCIOCPL/loader-pipelin
     * `aliasName` - (required) The Elasticsearch alias for the most recent index. This is also the prefix for the timestamped index
     * `mappingPath` - (required) The index mapping configuration in JSON
     * `settingsPath` - (required) The index settings configuration in JSON.
-  
+
 
 
 ## Development

@@ -1,0 +1,157 @@
+name: Main workflow
+on:
+  ## This tries to avoid unessesary pushes to forked repo
+  ## development branches. No sense in a dev building every
+  ## time they push for a PR and no one should be working on
+  ## common branches in their fork.
+  push:
+    #branches:
+      #- master
+      #- develop
+      #- 'hotfix/**'
+      #- 'release/**'
+      #- 'feature/**'
+  ## Any pull request. Yes the syntax looks weird
+  pull_request:
+
+jobs:
+  informer:
+    name: Get some info
+    runs-on: ubuntu-latest
+    env:
+      ML: |
+        I can has "quotes"?
+      REGULAR: UNLEADED
+      UNLEADED: "Premium"
+
+    steps:
+      - name: info
+        run:  |
+          echo "        GITHUB_REF_NAME: ${GITHUB_REF_NAME}"
+          echo "      GITHUB_REPOSITORY: ${GITHUB_REPOSITORY}"
+          echo "GITHUB_REPOSITORY_OWNER: ${GITHUB_REPOSITORY_OWNER}"
+          echo "             GITHUB_SHA: ${GITHUB_SHA}"
+          echo " "
+          echo "                ES Port: ${{ job.services.elasticsearch.ports[9200] }}"
+
+
+          echo -e "Multi-line ${ML}"
+          echo -e " REGULAR: ${REGULAR}"
+          echo -e "UNLEADED: ${UNLEADED}"
+
+
+
+  test:
+    name: Test the loader on ${{matrix.operating-system}}
+    runs-on: ${{ matrix.operating-system }}
+    strategy:
+      matrix:
+        #operating-system: [ubuntu-latest, windows-latest, macOS-latest]
+        operating-system: [ubuntu-latest]
+
+    steps:
+      - name: Get the code
+        uses: actions/checkout@v2
+
+      - name: Set up node
+        uses:  actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Install packages
+        run:  |
+          npm ci
+
+      - name: Run tests
+        run:  |
+          npm test
+        env:
+          CI: true
+
+      - name: Archive test artifacts
+        uses: actions/upload-artifact@v1
+        with:
+          name: test-results
+          path: coverage
+
+  integration_tests:
+    name: Run Integration Tests (Linux)
+    runs-on: ubuntu-latest
+    needs: test
+
+
+    services:
+      elasticsearch:
+        image: elasticsearch:7.17.5
+        env:
+            discovery.type: single-node
+            ES_JAVA_OPTS: -Xms750m -Xmx750m
+        ports:
+          ## NOTE: This will be exposed as a random port referenced below by job.services.elasticsearch.ports[9200]
+          - 9200/tcp
+        options: --health-cmd="curl http://localhost:9200/_cluster/health" --health-interval=10s --health-timeout=5s --health-retries=10
+
+    steps:
+      - name: Get the code
+        uses: actions/checkout@v2
+
+      - name: Set up node
+        uses:  actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Install packages
+        run:  |
+          npm ci
+
+      - name: Run the loader to put data in Elasticsearch.
+        run:  |
+          export NODE_CONFIG="
+            {
+              \"pipeline\": {
+                  \"source\": {
+                      \"module\": \"./lib/sources/github-resource-source\",
+                      \"config\": {
+                          \"repoUrl\": \"https://github.com/blairl-nih/r4r-loader\",
+                          \"branchName\": \"ticket/8-es-update\",
+                          \"resourcesPath\": \"/integration-tests/data/resources\",
+                          \"authentication\": {
+                              \"token\": \"${GITHUB_TOKEN}\"
+                          }
+                      }
+                  },
+                  \"transformers\": [
+                      {
+                          \"module\": \"./lib/transformers/netlifymd-resource-transformer\",
+                          \"config\": {
+                            \"mappingUrls\": {
+                                \"docs\": \"https://raw.githubusercontent.com/blairl-nih/r4r-content/master/data/docs.json\",
+                                \"researchAreas\": \"https://raw.githubusercontent.com/blairl-nih/r4r-content/master/data/researchAreas.json\",
+                                \"researchTypes\": \"https://raw.githubusercontent.com/blairl-nih/r4r-content/master/data/researchTypes.json\",
+                                \"toolTypes\": \"https://raw.githubusercontent.com/blairl-nih/r4r-content/master/data/toolTypes.json\"
+                            }
+                          }
+                      }
+                  ],
+                  \"loader\": {
+                      \"module\": \"./lib/loaders/elastic-resource-loader\",
+                      \"config\": {
+                        \"eshosts\": [ \"http://localhost:${{ job.services.elasticsearch.ports[9200] }}\" ],
+                        \"daysToKeep\": 10,
+                        \"aliasName\": \"r4r_v1\",
+                        \"mappingPath\": \"es-mappings/mappings.json\",
+                        \"settingsPath\": \"es-mappings/settings.json\"
+                      }
+                  }
+              }
+            }
+          "
+          echo "-----------"
+          echo "CN: ${NODE_CONFIG}"
+          echo "-----------"
+          # node index.js
+
+      - name: Run tests to check whether data was loaded as expected.
+        run: |
+          echo "We'll do something here"
+

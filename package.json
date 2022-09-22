@@ -23,29 +23,33 @@
   "bugs": {
     "url": "https://github.com/bryanpizzillo/r4rimporter/issues"
   },
+  "engines": {
+    "node": "^16"
+  },
   "homepage": "https://github.com/bryanpizzillo/r4rimporter#readme",
   "dependencies": {
-    "@octokit/rest": "^15.2.6",
-    "axios": "^0.18.0",
-    "config": "^1.30.0",
-    "elastic-tools": "git+https://github.com/nciocpl/elastic-tools.git#1.0.0",
-    "elasticsearch": "^14.2.2",
-    "gray-matter": "^3.1.1",
+    "@elastic/elasticsearch": "^7.17.0",
+    "@octokit/rest": "^19.0.4",
+    "axios": "^0.27.2",
+    "config": "^3.3.8",
+    "elastic-tools": "github:blairl-nih/elastic-tools#ticket/7-es-client",
+    "gray-matter": "^4.0.3",
     "loader-pipeline": "git+https://github.com/nciocpl/loader-pipeline.git#v1.1.0",
-    "moment": "^2.22.0",
+    "moment": "^2.29.4",
     "parse-github-repo-url": "^1.4.1",
-    "rehype-preset-minify": "^2.0.0",
-    "winston": "^3.0.0"
+    "winston": "^3.8.2"
   },
   "devDependencies": {
-    "@types/jest": "^23.1.0",
-    "@types/node": "^10.0.2",
-    "jest": "^22.4.3",
-    "nock": "^9.2.4",
-    "rehype-stringify": "^3.0.0",
-    "remark-parse": "^5.0.0",
-    "remark-rehype": "^3.0.0",
-    "unified": "^6.1.6",
+    "@types/jest": "^29.0.1",
+    "@types/node": "^16.11.58",
+    "jest": "^29.0.3",
+    "nock": "^13.2.9",
+    "rehype-preset-minify": "^5.1.0",
+    "rehype-stringify": "^8.0.0",
+    "remark-parse": "^9.0.0",
+    "remark-rehype": "^8.1.0",
+    "remark-stringify": "^9.0.1",
+    "unified": "^9.2.2",
     "winston-null-transport": "git+https://github.com/NCIOCPL/winston-null-transport.git#1.0.0"
   }
 }

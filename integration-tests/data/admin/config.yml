@@ -1,0 +1,157 @@
+# Defines hosting/authentication
+backend:
+#  name: test-repo
+#  name: git-gateway
+#  branch: master
+  name: github
+  repo: bryanpizzillo/r4rcontent
+  branch: master
+  base_url: https://cms-auth.pizzillo.com
+
+# Instead of just pushing directly to master,
+# require some reviews and approvals 
+#publish_mode: editorial_workflow
+
+media_folder: "assets/uploads"
+
+# Define the content model
+collections:
+  - name: "resource" ## The type of object
+    label: "Resource" ## The label used in the UI
+    folder: "resources" ## Where the content is stored
+    format: "yaml-frontmatter"
+    create: true ## New items can be created.
+    slug: "{{slug}}" ## The filename to create
+    fields: # The fields
+      - {label: "ID", name: "id", widget: "number" }
+      - {label: "Title", name: "title", widget: "string" }
+      - {label: "Web Site", name: "website", widget: "string" }
+      - {label: "Description", name: "description", widget: "markdown", default: ""}
+      - {label: "Content", name: "body", widget: "markdown"}
+      - label: "Resource Access"
+        name: "resourceAccess"
+        widget: "object"
+        fields:
+          - label: "Type"
+            name: "type"
+            widget: "select"
+            options:
+              - { label: "Open Access", value: "open" }
+              - { label: "Requires Registration", value: "register" }
+              - { label: "Cost", value: "cost" }
+          - { label: "Additional Notes", name: "notes", widget: "string", default: "" }
+      - label: "Points of Contact"
+        name: "poc"
+        widget: "list"
+        default: []
+        fields:
+          - label: "Name"
+            name: "name"
+            widget: "object"
+            fields:
+              - {label: "Prefix", name: "prefix", widget: "string"}
+              - {label: "First Name", name: "firstname", widget: "string"}
+              - {label: "Middle Name", name: "middlename", widget: "string"}
+              - {label: "Last Name", name: "lastname", widget: "string"}
+              - {label: "Suffix", name: "suffix", widget: "string"}
+          - {label: "Title", name: "title", widget: "string"}
+          - {label: "Phone", name: "phone", widget: "string"}
+          - {label: "E-Mail", name: "email", widget: "string"}      
+      - label: "Tool Types"
+        name: "toolTypes"
+        widget: "list"
+        default: []
+        fields:
+          - label: "Tool Type"
+            name: "toolType"
+            widget: "select"
+            options: 
+              - { label: "Lab Tools", value: "lab_tools" }
+              - { label: "Lab Tools - Reagents", value: "lab_tools/reagents" }
+              - { label: "Lab Tools - Biospecimen", value: "lab_tools/biospecimen" }
+              - { label: "Lab Tools - Assays", value: "lab_tools/assays" }
+              - { label: "Lab Tools - Cell Lines", value: "lab_tools/cell_lines" }
+              - { label: "Lab Tools - Protocols", value: "lab_tools/protocols" }
+              - { label: "Lab Tools - Animal Models", value: "lab_tools/animal_models" }
+              - { label: "Lab Tools - Plant Samples", value: "lab_tools/plant_samples" }
+              - { label: "Lab Tools - Vectors", value: "lab_tools/vectors" }
+              - { label: "Lab Tools - Compounds", value: "lab_tools/compounds" }
+              - { label: "Community Research Tools", value: "community_research_tools" }
+              - { label: "Community Research Tools - Questionnaire", value: "community_research_tools/questionnaire" }
+              - { label: "Community Research Tools - Screener", value: "community_research_tools/screener" }
+              - { label: "Community Research Tools - Survey", value: "community_research_tools/survey" }
+              - { label: "Community Research Tools - Risk Assessment", value: "community_research_tools/risk_assessment" }
+              - { label: "Community Research Tools - Sample Size Calculator", value: "community_research_tools/sample_size_calculator" }
+              - { label: "Clinical Research Tools", value: "clinical_research_tools" }
+              - { label: "Clinical Research Tools - CTCAE", value: "clinical_research_tools/ctcae" }
+              - { label: "Clinical Research Tools - Consent Forms", value: "clinical_research_tools/consent_forms" }
+              - { label: "Clinical Research Tools - Guidelines/Protocols", value: "clinical_research_tools/guidelines_protocols" }
+              - { label: "Clinical Research Tools - Policies", value: "clinical_research_tools/policies" }
+              - { label: "Datasets & Databases", value: "datasets_databases" }
+              - { label: "Datasets & Databases - Clinical Data", value: "datasets_databases/clinical_data" }
+              - { label: "Datasets & Databases - Imaging", value: "datasets_databases/imaging" }
+              - { label: "Datasets & Databases - Genomic Datasets", value: "datasets_databases/genomic_datasets" }
+              - { label: "Datasets & Databases - Epidemiologic Data", value: "datasets_databases/epidemiologic_data" }
+              - { label: "Datasets & Databases - Patient Registries", value: "datasets_databases/patient_registries" }
+              - { label: "Datasets & Databases - Biological Networks", value: "datasets_databases/biological_networks" }
+              - { label: "Analysis Tools", value: "analysis_tools" }
+              - { label: "Analysis Tools - Genomic Analysis", value: "analysis_tools/genomic_analysis" }
+              - { label: "Analysis Tools - Data Visualization", value: "analysis_tools/data_visualization" }
+              - { label: "Analysis Tools - Imaging Analysis", value: "analysis_tools/imaging_analysis" }
+              - { label: "Analysis Tools - R Software", value: "analysis_tools/r_software" }
+              - { label: "Analysis Tools - Modeling", value: "analysis_tools/modeling" }
+              - { label: "Analysis Tools - Natural Language Processing", value: "analysis_tools/natural_language_processing" }
+              - { label: "Analysis Tools - Statistical Software", value: "analysis_tools/statistical_software" }
+              - { label: "Networks/Consortiums", value: "networks_consortiums" }
+              - { label: "Terminology", value: "terminology" }
+              - { label: "Training Resources", value: "training_resources" }
+      - label: "Research Areas"
+        name: "researchAreas"
+        widget: "list"
+        default: []
+        fields:
+          - label: "Research Area"
+            name: "researchArea"
+            widget: "select"
+            options: 
+              - { label: "Cancer Treatment", value: "cancer_treatment" }
+              - { label: "Cancer Biology", value: "cancer_biology" }
+              - { label: "Cancer Omics", value: "cancer_omics" }
+              - { label: "Screening & Detection", value: "screening_detection" }
+              - { label: "Cancer Health Disparities", value: "cancer_health_disparities" }
+              - { label: "Cancer & Public Health", value: "cancer_public_health" }
+              - { label: "Cancer Statistics", value: "cancer_statistics" }
+              - { label: "Cancer Diagnosis", value: "cancer_diagnosis" }
+              - { label: "Causes of Cancer", value: "causes_of_cancer" }
+              - { label: "Cancer Survivorship", value: "cancer_survivorship" }
+              - { label: "Cancer Prevention", value: "cancer_prevention" }
+              - { label: "Bioinformatics", value: "bioinformatics" }
+      - label: "Research Types"
+        name: "researchTypes"
+        widget: "list"
+        default: []
+        fields:
+          - label: "Research Type"
+            name: "researchType"
+            widget: "select"
+            options: 
+              - { label: "Basic", value: "basic" }
+              - { label: "Translational", value: "translational" } 
+              - { label: "Clinical Trials", value: "clinical_trials" }
+              - { label: "Epidemiologic", value: "epidemiologic" }
+              - { label: "Clinical", value: "clinical" }
+      - label: "Divisions, Offices and Centers (DOCs)"
+        name: "docs"
+        widget: "list"
+        default: []
+        fields:
+          - label: "DOC"
+            name: "doc"
+            widget: "select"
+            options:
+              - { "label": "Center for Biomedical Informatics and Informatics Technology (CBIIT)", "value": "cbiit" }
+              - { "label": "Division of Cancer Treatment and Diagnosis (DCTD)", "value": "dctd" }
+              - { "label": "Center for Cancer Genomics (CCG)", "value": "ccg" }
+              - { "label": "Division of Cancer Control and Population Sciences (DCCPS)", "value": "dccps" }
+              - { "label": "Division of Cancer Biology (DCB)", "value": "dcb" }
+              - { "label": "Division of Cancer Epidemiology and Genetics (DCEG)", "value": "dceg" }

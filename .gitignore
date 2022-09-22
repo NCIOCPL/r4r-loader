@@ -1,4 +1,7 @@
 config/local.json
+integration-tests/target
+
+.vscode
 
 # Logs
 logs
@@ -60,3 +63,6 @@ typings/
 .env
 
 .vscode/settings.json
+
+# MacOS
+.DS_Store
