@@ -135,7 +135,8 @@ jobs:
               }
             }
           "
-          echo "NODE_CONFIG=${CONFIG_OVERRIDE}" >> $GITHUB_ENV
+          echo "NODE_CONFIG=\"${CONFIG_OVERRIDE}\"" >> $GITHUB_ENV
+          cat $GITHUB_ENV
 
       - name: Get the code
         uses: actions/checkout@v2
