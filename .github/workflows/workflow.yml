@@ -125,10 +125,10 @@ jobs:
                           \"module\": \"./lib/transformers/netlifymd-resource-transformer\",
                           \"config\": {
                             \"mappingUrls\": {
-                                \"docs\": \"https://raw.githubusercontent.com/nciocpl/r4r-content/integration-tests/data/data/docs.json\",
-                                \"researchAreas\": \"https://raw.githubusercontent.com/nciocpl/r4r-content/integration-tests/data/data/researchAreas.json\",
-                                \"researchTypes\": \"https://raw.githubusercontent.com/nciocpl/r4r-content/integration-tests/data/data/researchTypes.json\",
-                                \"toolTypes\": \"https://raw.githubusercontent.com/nciocpl/r4r-content/integration-tests/data/data/toolTypes.json\"
+                                \"docs\": \"https://raw.githubusercontent.com/nciocpl/r4r-loader/ticket/8-es-update/integration-tests/data/data/docs.json\",
+                                \"researchAreas\": \"https://raw.githubusercontent.com/nciocpl/r4r-loader/ticket/8-es-update/integration-tests/data/data/researchAreas.json\",
+                                \"researchTypes\": \"https://raw.githubusercontent.com/nciocpl/r4r-loader/ticket/8-es-update/integration-tests/data/data/researchTypes.json\",
+                                \"toolTypes\": \"https://raw.githubusercontent.com/nciocpl/r4r-loader/ticket/8-es-update/integration-tests/data/data/toolTypes.json\"
                             }
                           }
                       }
