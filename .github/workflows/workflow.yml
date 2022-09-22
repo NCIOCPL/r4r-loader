@@ -95,6 +95,7 @@ jobs:
 
       - name: Override default configuration
         run: |
+          set -v
           CONFIG_OVERRIDE="
             {
               \"pipeline\": {
