@@ -92,21 +92,10 @@ jobs:
         options: --health-cmd="curl http://localhost:9200/_cluster/health" --health-interval=10s --health-timeout=5s --health-retries=10
 
     steps:
-      - name: Get the code
-        uses: actions/checkout@v2
 
-      - name: Set up node
-        uses:  actions/setup-node@v3
-        with:
-          node-version: 16
-
-      - name: Install packages
-        run:  |
-          npm ci
-
-      - name: Run the loader to put data in Elasticsearch.
-        run:  |
-          export NODE_CONFIG="
+      - name: Override default configuration
+        run: |
+          CONFIG_OVERRIDE="
             {
               \"pipeline\": {
                   \"source\": {
@@ -146,12 +135,52 @@ jobs:
               }
             }
           "
+          echo "NODE_CONFIG=${CONFIG_OVERRIDE}" >> $GITHUB_ENV
+
+      - name: Get the code
+        uses: actions/checkout@v2
+
+      - name: Set up node
+        uses:  actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Install packages
+        run:  |
+          npm ci
+
+      - name: Run the loader to put data in Elasticsearch.
+        run:  |
           echo "-----------"
           echo "CN: ${NODE_CONFIG}"
           echo "-----------"
           node index.js
 
-      - name: Run tests to check whether data was loaded as expected.
+      - name: Run Integration Test
+        ## Normally bash runs with -e which exits the shell upon hitting
+        ## an error which breaks our capturing of those errors.
+        shell: bash --noprofile --norc -o pipefail {0}
         run: |
-          echo "We'll do something here"
+              ## Run Karate
+              cd integration-tests && ./bin/karate ./features
+              ## Store the exit code off so we can pass this step and
+              ## capture the test output in the next step, but still
+              ## fail the entire job
+              echo "TEST_EXIT_CODE=$?" >> $GITHUB_ENV
+              exit 0
 
+      - name: Upload Integration test results
+        uses: actions/upload-artifact@v1
+        with:
+          name: integration-test-results
+          path: integration-tests/target
+
+      - name: Fail build on bad tests
+        run: |
+              ## Check if we had errors on the test step, and if so, fail the job
+              if [ $TEST_EXIT_CODE -ne 0 ]; then
+                echo "Tests Failed -- See Run Integration Test step or integration-test-results artifact for more information"
+                exit $TEST_EXIT_CODE
+              else
+                echo "Tests passed"
+              fi
