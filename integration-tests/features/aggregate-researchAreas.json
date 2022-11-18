@@ -1,0 +1,73 @@
+{
+    "took": 1,
+    "timed_out": false,
+    "_shards": {
+        "total": 1,
+        "successful": 1,
+        "skipped": 0,
+        "failed": 0
+    },
+    "hits": {
+        "total": {
+            "value": 166,
+            "relation": "eq"
+        },
+        "max_score": null,
+        "hits": []
+    },
+    "aggregations": {
+        "TestAggregation": {
+            "doc_count": 303,
+            "innerAggregation": {
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0,
+                "buckets": [
+                    {
+                        "key": "Cancer & Public Health",
+                        "doc_count": 16
+                    },
+                    {
+                        "key": "Cancer Biology",
+                        "doc_count": 62
+                    },
+                    {
+                        "key": "Cancer Diagnosis",
+                        "doc_count": 11
+                    },
+                    {
+                        "key": "Cancer Health Disparities",
+                        "doc_count": 18
+                    },
+                    {
+                        "key": "Cancer Omics",
+                        "doc_count": 63
+                    },
+                    {
+                        "key": "Cancer Prevention",
+                        "doc_count": 2
+                    },
+                    {
+                        "key": "Cancer Statistics",
+                        "doc_count": 20
+                    },
+                    {
+                        "key": "Cancer Survivorship",
+                        "doc_count": 4
+                    },
+                    {
+                        "key": "Cancer Treatment",
+                        "doc_count": 72
+                    },
+                    {
+                        "key": "Causes of Cancer",
+                        "doc_count": 5
+                    },
+                    {
+                        "key": "Screening & Detection",
+                        "doc_count": 30
+                    }
+                ]
+            }
+        }
+    }
+}

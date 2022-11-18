@@ -1,0 +1,56 @@
+{
+    "took": 4,
+    "timed_out": false,
+    "_shards": {
+        "total": 1,
+        "successful": 1,
+        "skipped": 0,
+        "failed": 0
+    },
+    "hits": {
+        "total": {
+            "value": 166,
+            "relation": "eq"
+        },
+        "max_score": null,
+        "hits": []
+    },
+    "aggregations": {
+        "TestAggregation": {
+            "doc_count": 221,
+            "innerAggregation": {
+                "doc_count": 65,
+                "innermostAggregation": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "Biological Networks",
+                            "doc_count": 2
+                        },
+                        {
+                            "key": "Clinical Data",
+                            "doc_count": 21
+                        },
+                        {
+                            "key": "Epidemiologic Data",
+                            "doc_count": 12
+                        },
+                        {
+                            "key": "Genomic Datasets",
+                            "doc_count": 13
+                        },
+                        {
+                            "key": "Imaging",
+                            "doc_count": 14
+                        },
+                        {
+                            "key": "Patient Registries",
+                            "doc_count": 3
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}

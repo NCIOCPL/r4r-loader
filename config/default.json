@@ -1,15 +1,14 @@
-{   
+{
     "logging": {
         "level": "info"
     },
-    "pipeline": { 
+    "pipeline": {
         "source": {
             "module": "./lib/sources/github-resource-source",
             "config": {
                 "repoUrl": "https://github.com/nciocpl/r4r-content",
                 "resourcesPath": "/resources",
                 //"authentication": {
-                //    "type": "token",
                 //    "token": "SECRET"
                 //}
             }
@@ -31,7 +30,7 @@
             "module": "./lib/loaders/elastic-resource-loader",
             "config": {
                "eshosts": [ "http://localhost:9200" ],
-               "daysToKeep": 10,               
+               "daysToKeep": 10,
                "aliasName": "r4r_v1",
                "mappingPath": "es-mappings/mappings.json",
                "settingsPath": "es-mappings/settings.json"

@@ -1,0 +1,20 @@
+version: "3.7"
+
+services:
+    elasticsearch:
+        image: elasticsearch:7.17.5
+        ## All of the ES settings can be set via the environment
+        ## vars.
+        environment:
+            - discovery.type=single-node
+            - ES_JAVA_OPTS=-Xms750m -Xmx750m
+        ports:
+            - "9200:9200"
+        networks:
+            r4rloader:
+                aliases:
+                    - elasticsearch
+
+
+networks:
+    r4rloader:

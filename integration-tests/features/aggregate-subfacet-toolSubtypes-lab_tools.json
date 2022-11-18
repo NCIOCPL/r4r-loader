@@ -1,0 +1,68 @@
+{
+    "took": 3,
+    "timed_out": false,
+    "_shards": {
+        "total": 1,
+        "successful": 1,
+        "skipped": 0,
+        "failed": 0
+    },
+    "hits": {
+        "total": {
+            "value": 166,
+            "relation": "eq"
+        },
+        "max_score": null,
+        "hits": []
+    },
+    "aggregations": {
+        "TestAggregation": {
+            "doc_count": 221,
+            "innerAggregation": {
+                "doc_count": 37,
+                "innermostAggregation": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "Animal Models",
+                            "doc_count": 3
+                        },
+                        {
+                            "key": "Assays",
+                            "doc_count": 4
+                        },
+                        {
+                            "key": "Biospecimen",
+                            "doc_count": 7
+                        },
+                        {
+                            "key": "Cell Lines",
+                            "doc_count": 4
+                        },
+                        {
+                            "key": "Compounds",
+                            "doc_count": 3
+                        },
+                        {
+                            "key": "Plant Samples",
+                            "doc_count": 2
+                        },
+                        {
+                            "key": "Protocols",
+                            "doc_count": 4
+                        },
+                        {
+                            "key": "Reagents",
+                            "doc_count": 8
+                        },
+                        {
+                            "key": "Vectors",
+                            "doc_count": 2
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}
