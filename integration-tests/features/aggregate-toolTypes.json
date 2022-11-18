@@ -1,0 +1,57 @@
+{
+    "took": 2,
+    "timed_out": false,
+    "_shards": {
+        "total": 1,
+        "successful": 1,
+        "skipped": 0,
+        "failed": 0
+    },
+    "hits": {
+        "total": {
+            "value": 166,
+            "relation": "eq"
+        },
+        "max_score": null,
+        "hits": []
+    },
+    "aggregations": {
+        "TestAggregation": {
+            "doc_count": 197,
+            "innerAggregation": {
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0,
+                "buckets": [
+                    {
+                        "key": "Analysis Tools",
+                        "doc_count": 97
+                    },
+                    {
+                        "key": "Clinical Research Tools",
+                        "doc_count": 2
+                    },
+                    {
+                        "key": "Community Research Tools",
+                        "doc_count": 1
+                    },
+                    {
+                        "key": "Datasets & Databases",
+                        "doc_count": 58
+                    },
+                    {
+                        "key": "Lab Tools",
+                        "doc_count": 29
+                    },
+                    {
+                        "key": "Networks/Consortiums",
+                        "doc_count": 4
+                    },
+                    {
+                        "key": "Terminology",
+                        "doc_count": 6
+                    }
+                ]
+            }
+        }
+    }
+}
