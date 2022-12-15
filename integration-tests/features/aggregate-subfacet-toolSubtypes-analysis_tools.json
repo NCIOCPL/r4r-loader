@@ -1,0 +1,60 @@
+{
+    "took": 4,
+    "timed_out": false,
+    "_shards": {
+        "total": 1,
+        "successful": 1,
+        "skipped": 0,
+        "failed": 0
+    },
+    "hits": {
+        "total": {
+            "value": 166,
+            "relation": "eq"
+        },
+        "max_score": null,
+        "hits": []
+    },
+    "aggregations": {
+        "TestAggregation": {
+            "doc_count": 221,
+            "innerAggregation": {
+                "doc_count": 117,
+                "innermostAggregation": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                        {
+                            "key": "Data Visualization",
+                            "doc_count": 32
+                        },
+                        {
+                            "key": "Genomic Analysis",
+                            "doc_count": 37
+                        },
+                        {
+                            "key": "Imaging Analysis",
+                            "doc_count": 14
+                        },
+                        {
+                            "key": "Modeling",
+                            "doc_count": 11
+                        },
+                        {
+                            "key": "Natural Language Processing",
+                            "doc_count": 2
+                        },
+                        {
+                            "key": "R Software",
+                            "doc_count": 13
+                        },
+                        {
+                            "key": "Statistical Software",
+                            "doc_count": 8
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}

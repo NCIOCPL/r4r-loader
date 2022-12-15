@@ -1,20 +1,168 @@
-# This is a minimal workflow.
 
-name: CI
-
+name: Main workflow
 on:
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+  ## No sense in a dev building every time they push and no one
+  ## should be working on the common branches.
+  push:
+    branches:
+      - master
+      - main
+      - develop
+      - 'hotfix/**'
+      - 'release/**'
+      - 'feature/**'
+  ## Any pull request. Yes the syntax looks weird
+  pull_request:
+
 jobs:
 
-  build:
 
-    runs-on: ubuntu-latest
+  test:
+    name: Test the loader on ${{matrix.operating-system}}
+    runs-on: ${{ matrix.operating-system }}
+    strategy:
+      matrix:
+        operating-system: [ubuntu-latest, windows-latest, macOS-latest]
 
     steps:
-      # Hello
-      - name: Run a one-line script
+      - name: Get the code
+        uses: actions/checkout@v3
+
+      - name: Set up node
+        uses:  actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+          registry-url: https://npm.pkg.github.com
+          scope: '@nciocpl'
+
+      - name: Install packages
+        run:  |
+          npm ci
+
+      - name: Run tests
+        run:  |
+          npm test
+        env:
+          CI: true
+
+      - name: Archive test artifacts
+        uses: actions/upload-artifact@v1
+        with:
+          name: test-results
+          path: coverage
+
+
+  integration_tests:
+    name: Run Integration Tests (Linux)
+    runs-on: ubuntu-latest
+    needs: test
+
+    services:
+      elasticsearch:
+        image: elasticsearch:7.17.5
+        env:
+            discovery.type: single-node
+            ES_JAVA_OPTS: -Xms750m -Xmx750m
+        ports:
+          ## NOTE: This will be exposed as a random port referenced below by job.services.elasticsearch.ports[9200]
+          - 9200/tcp
+        options: --health-cmd="curl http://localhost:9200/_cluster/health" --health-interval=10s --health-timeout=5s --health-retries=10
+
+    steps:
+
+      - name: Get the code
+        uses: actions/checkout@v3
+
+      - name: Set up node
+        uses:  actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+          registry-url: https://npm.pkg.github.com
+          scope: '@nciocpl'
+
+      - name: Install packages
+        run:  |
+          npm ci
+
+      - name: Run the loader to put data in Elasticsearch.
+        # It would be awesome if we could set up the config override in the job's first step
+        # in order to make it more obvious it was there and may need to be adjusted for
+        # whatever you're doing. Unfortunately, GitHub's magic for passing environment
+        # variables via $GITHUB_ENV doesn't handle newlines very well, and this one is
+        # sufficiently complex, the newlines are vital to readability.
+        run:  |
+          export NODE_CONFIG="
+            {
+              \"pipeline\": {
+                  \"source\": {
+                      \"module\": \"./lib/sources/github-resource-source\",
+                      \"config\": {
+                          \"repoUrl\": \"https://github.com/nciocpl/r4r-content\",
+                          \"branchName\": \"integration-testing\",
+                          \"resourcesPath\": \"/resources\",
+                          \"authentication\": {
+                              \"token\": \"${GITHUB_TOKEN}\"
+                          }
+                      }
+                  },
+                  \"transformers\": [
+                      {
+                          \"module\": \"./lib/transformers/netlifymd-resource-transformer\",
+                          \"config\": {
+                            \"mappingUrls\": {
+                                \"docs\": \"https://raw.githubusercontent.com/nciocpl/r4r-loader/master/integration-tests/data/data/docs.json\",
+                                \"researchAreas\": \"https://raw.githubusercontent.com/nciocpl/r4r-loader/master/integration-tests/data/data/researchAreas.json\",
+                                \"researchTypes\": \"https://raw.githubusercontent.com/nciocpl/r4r-loader/master/integration-tests/data/data/researchTypes.json\",
+                                \"toolTypes\": \"https://raw.githubusercontent.com/nciocpl/r4r-loader/master/integration-tests/data/data/toolTypes.json\"
+                            }
+                          }
+                      }
+                  ],
+                  \"loader\": {
+                      \"module\": \"./lib/loaders/elastic-resource-loader\",
+                      \"config\": {
+                        \"eshosts\": [ \"http://localhost:${{ job.services.elasticsearch.ports[9200] }}\" ],
+                        \"daysToKeep\": 10,
+                        \"aliasName\": \"r4r_v1\",
+                        \"mappingPath\": \"es-mappings/mappings.json\",
+                        \"settingsPath\": \"es-mappings/settings.json\"
+                      }
+                  }
+              }
+            }
+          "
+          node index.js
+
+      - name: Run Integration Test
+        ## Normally bash runs with -e which exits the shell upon hitting
+        ## an error which breaks our capturing of those errors.
+        shell: bash --noprofile --norc -o pipefail {0}
         run: |
-          echo "Hello, world!"
+              ## Run Karate
+              ## Variable is picked up by karate-config.js
+              export KARATE_ESHOST="http://localhost:${{ job.services.elasticsearch.ports[9200] }}"
+              cd integration-tests && ./bin/karate ./features
+              ## Store the exit code off so we can pass this step and
+              ## capture the test output in the next step, but still
+              ## fail the entire job
+              echo "TEST_EXIT_CODE=$?" >> $GITHUB_ENV
+              exit 0
+
+      - name: Upload Integration test results
+        uses: actions/upload-artifact@v1
+        with:
+          name: integration-test-results
+          path: integration-tests/target
+
+      - name: Fail build on bad tests
+        run: |
+              ## Check if we had errors on the test step, and if so, fail the job
+              if [ $TEST_EXIT_CODE -ne 0 ]; then
+                echo "Tests Failed -- See Run Integration Test step or integration-test-results artifact for more information"
+                exit $TEST_EXIT_CODE
+              else
+                echo "Tests passed"
+              fi

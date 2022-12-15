@@ -1,0 +1,57 @@
+{
+    "took": 2,
+    "timed_out": false,
+    "_shards": {
+        "total": 1,
+        "successful": 1,
+        "skipped": 0,
+        "failed": 0
+    },
+    "hits": {
+        "total": {
+            "value": 166,
+            "relation": "eq"
+        },
+        "max_score": null,
+        "hits": []
+    },
+    "aggregations": {
+        "TestAggregation": {
+            "doc_count": 170,
+            "innerAggregation": {
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0,
+                "buckets": [
+                    {
+                        "key": "Center for Biomedical Informatics and Informatics Technology (CBIIT)",
+                        "doc_count": 60
+                    },
+                    {
+                        "key": "Center for Cancer Genomics (CCG)",
+                        "doc_count": 33
+                    },
+                    {
+                        "key": "Division of Cancer Biology (DCB)",
+                        "doc_count": 7
+                    },
+                    {
+                        "key": "Division of Cancer Control and Population Sciences (DCCPS)",
+                        "doc_count": 24
+                    },
+                    {
+                        "key": "Division of Cancer Epidemiology and Genetics (DCEG)",
+                        "doc_count": 1
+                    },
+                    {
+                        "key": "Division of Cancer Prevention (DCP)",
+                        "doc_count": 1
+                    },
+                    {
+                        "key": "Division of Cancer Treatment and Diagnosis (DCTD)",
+                        "doc_count": 44
+                    }
+                ]
+            }
+        }
+    }
+}
