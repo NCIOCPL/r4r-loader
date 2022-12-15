@@ -113,10 +113,10 @@ jobs:
                           \"module\": \"./lib/transformers/netlifymd-resource-transformer\",
                           \"config\": {
                             \"mappingUrls\": {
-                                \"docs\": \"https://raw.githubusercontent.com/nciocpl/r4r-loader/master/integration-tests/data/data/docs.json\",
-                                \"researchAreas\": \"https://raw.githubusercontent.com/nciocpl/r4r-loader/master/integration-tests/data/data/researchAreas.json\",
-                                \"researchTypes\": \"https://raw.githubusercontent.com/nciocpl/r4r-loader/master/integration-tests/data/data/researchTypes.json\",
-                                \"toolTypes\": \"https://raw.githubusercontent.com/nciocpl/r4r-loader/master/integration-tests/data/data/toolTypes.json\"
+                                \"docs\": \"https://raw.githubusercontent.com/NCIOCPL/r4r-content/integration-testing/data/docs.json\",
+                                \"researchAreas\": \"https://raw.githubusercontent.com/nciocpl/r4r-content/integration-testing/data/researchAreas.json\",
+                                \"researchTypes\": \"https://raw.githubusercontent.com/nciocpl/r4r-content/integration-testing/data/researchTypes.json\",
+                                \"toolTypes\": \"https://raw.githubusercontent.com/nciocpl/r4r-content/integration-testing/data/toolTypes.json\"
                             }
                           }
                       }
