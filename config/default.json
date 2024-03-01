@@ -8,9 +8,9 @@
             "config": {
                 "repoUrl": "https://github.com/nciocpl/r4r-content",
                 "resourcesPath": "/resources",
-                //"authentication": {
-                //    "token": "SECRET"
-                //}
+                "authentication": {
+                   "token": "SECRET"
+                }
             }
         },
         "transformers": [

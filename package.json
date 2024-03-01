@@ -1,6 +1,6 @@
 {
-  "name": "r4rimporter",
-  "version": "1.2.0",
+  "name": "r4r-loader",
+  "version": "3.0.0",
   "description": "Content Importer for the Resources for Researchers API",
   "main": "index.js",
   "scripts": {
@@ -20,24 +20,23 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/NCIOCPL/r4rimporter.git"
+    "url": "git+https://github.com/NCIOCPL/r4r-loader.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/NCIOCPL/r4rimporter/issues"
+    "url": "https://github.com/NCIOCPL/r4r-loader/issues"
   },
   "engines": {
-    "node": ">=16.0.0 <17.0.0",
-    "npm": ">=8.0.0 <9.0.0"
+    "node": ">=20.11.0 <21.0.0"
   },
-  "homepage": "https://github.com/NCIOCPL/r4rimporter#readme",
+  "homepage": "https://github.com/NCIOCPL/r4r-loader#readme",
   "dependencies": {
     "@elastic/elasticsearch": "^7.17.0",
     "@octokit/rest": "^19.0.4",
     "axios": "^0.27.2",
     "config": "^3.3.8",
-    "elastic-tools": "git+https://github.com/nciocpl/elastic-tools.git#v2.0.0",
+    "elastic-tools": "github:nciocpl/elastic-tools#v3.0.0",
     "gray-matter": "^4.0.3",
     "loader-pipeline": "git+https://github.com/nciocpl/loader-pipeline.git#v1.1.0",
     "moment": "^2.29.4",
