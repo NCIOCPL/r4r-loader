@@ -1,0 +1,9 @@
+[
+    { "label": "Center for Biomedical Informatics and Informatics Technology (CBIIT)", "value": "cbiit" },
+    { "label": "Division of Cancer Treatment and Diagnosis (DCTD)", "value": "dctd" },
+    { "label": "Center for Cancer Genomics (CCG)", "value": "ccg" },
+    { "label": "Division of Cancer Control and Population Sciences (DCCPS)", "value": "dccps" },
+    { "label": "Division of Cancer Biology (DCB)", "value": "dcb" },
+    { "label": "Division of Cancer Epidemiology and Genetics (DCEG)", "value": "dceg" },
+    { "label": "Division of Cancer Prevention (DCP)", "value": "dcp" }
+]

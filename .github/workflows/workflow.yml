@@ -14,23 +14,28 @@ on:
       - 'feature/**'
   ## Any pull request. Yes the syntax looks weird
   pull_request:
+  workflow_dispatch:
+
+# Only run one instance of this workflow at a time per branch.
+concurrency:
+  group: ${{ github.ref_name }}-${{ github.workflow }}
+  cancel-in-progress: true
 
 jobs:
-
 
   test:
     name: Test the loader on ${{matrix.operating-system}}
     runs-on: ${{ matrix.operating-system }}
     strategy:
       matrix:
-        operating-system: [ubuntu-latest, windows-latest, macOS-latest]
+        operating-system: [ubuntu-latest, macOS-latest, windows-latest]
 
     steps:
       - name: Get the code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up node
-        uses:  actions/setup-node@v3
+        uses:  actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
           cache: 'npm'
@@ -48,9 +53,9 @@ jobs:
           CI: true
 
       - name: Archive test artifacts
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v4
         with:
-          name: test-results
+          name: test-results-${{ matrix.operating-system }}
           path: coverage
 
 
@@ -73,10 +78,10 @@ jobs:
     steps:
 
       - name: Get the code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up node
-        uses:  actions/setup-node@v3
+        uses:  actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
           cache: 'npm'
@@ -98,25 +103,20 @@ jobs:
             {
               \"pipeline\": {
                   \"source\": {
-                      \"module\": \"./lib/sources/github-resource-source\",
+                      \"module\": \"./lib/sources/filesystem-resource-source\",
                       \"config\": {
-                          \"repoUrl\": \"https://github.com/nciocpl/r4r-content\",
-                          \"branchName\": \"integration-testing\",
-                          \"resourcesPath\": \"/resources\",
-                          \"authentication\": {
-                              \"token\": \"${GITHUB_TOKEN}\"
-                          }
+                          \"resourcesPath\": \"./integration-tests/data/resources\"
                       }
                   },
                   \"transformers\": [
                       {
                           \"module\": \"./lib/transformers/netlifymd-resource-transformer\",
                           \"config\": {
-                            \"mappingUrls\": {
-                                \"docs\": \"https://raw.githubusercontent.com/NCIOCPL/r4r-content/integration-testing/data/docs.json\",
-                                \"researchAreas\": \"https://raw.githubusercontent.com/nciocpl/r4r-content/integration-testing/data/researchAreas.json\",
-                                \"researchTypes\": \"https://raw.githubusercontent.com/nciocpl/r4r-content/integration-testing/data/researchTypes.json\",
-                                \"toolTypes\": \"https://raw.githubusercontent.com/nciocpl/r4r-content/integration-testing/data/toolTypes.json\"
+                            \"mappingFiles\": {
+                                \"docs\":          \"./integration-tests/data/data/docs.json\",
+                                \"researchAreas\": \"./integration-tests/data/data/researchAreas.json\",
+                                \"researchTypes\": \"./integration-tests/data/data/researchTypes.json\",
+                                \"toolTypes\":     \"./integration-tests/data/data/toolTypes.json\"
                             }
                           }
                       }
@@ -152,7 +152,7 @@ jobs:
               exit 0
 
       - name: Upload Integration test results
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v4
         with:
           name: integration-test-results
           path: integration-tests/target
