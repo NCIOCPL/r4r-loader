@@ -4,24 +4,20 @@
     },
     "pipeline": {
         "source": {
-            "module": "./lib/sources/github-resource-source",
+            "module": "./lib/sources/filesystem-resource-source",
             "config": {
-                "repoUrl": "https://github.com/nciocpl/r4r-content",
-                "resourcesPath": "/resources",
-                "authentication": {
-                   "token": "SECRET"
-                }
+                "resourcesPath": "../resources"
             }
         },
         "transformers": [
             {
                 "module": "./lib/transformers/netlifymd-resource-transformer",
                 "config": {
-                 "mappingUrls": {
-                    "docs": "https://raw.githubusercontent.com/nciocpl/r4r-content/master/data/docs.json",
-                    "researchAreas": "https://raw.githubusercontent.com/nciocpl/r4r-content/master/data/researchAreas.json",
-                    "researchTypes": "https://raw.githubusercontent.com/nciocpl/r4r-content/master/data/researchTypes.json",
-                    "toolTypes": "https://raw.githubusercontent.com/nciocpl/r4r-content/master/data/toolTypes.json"
+                 "mappingFiles": {
+                    "docs": "../mapping/docs.json",
+                    "researchAreas": "../mapping/researchAreas.json",
+                    "researchTypes": "../mapping/researchTypes.json",
+                    "toolTypes": "../mapping/toolTypes.json"
                  }
                 }
             }

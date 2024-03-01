@@ -1,0 +1,17 @@
+prose:
+  rooturl: '_resources'
+  #siteurl: 'http://example.org/r4r'
+  ignore:
+    - README.md
+    - _prose.yml
+  metadata: 
+    _resources:
+      - name: 'id'
+        field: 
+          element: number
+          type: number
+      - name: 'title'
+        field:
+          element: "text"
+          help: "Enter the title of the resource"
+          type: "text"
