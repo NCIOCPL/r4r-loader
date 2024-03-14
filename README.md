@@ -2,7 +2,7 @@
 Resources for Researchers Prototype Importer
 
 ## Requirements
-* Node 8
+* Node 20
 
 ## Running loader
 1. Clone this repo
@@ -12,25 +12,21 @@ Resources for Researchers Prototype Importer
 ## Configuration Information
 The configuration file is based on the https://github.com/NCIOCPL/loader-pipeline library.  For the R4R Loader we have implemented the following pipeline steps:
 ### Source
-* **GithubResourceSource** - This class pulls the content from a Github Repository
+* **FileSystemResourceSource** - This class pulls the content from the local filesystem.
   * Input: N/A
-  * Output: This returns an array of the *fetched* documents in git.
+  * Output: This returns an array of the raw documents.
   * Configuration:
-    * `repoUrl` : (required) The git repo where the content resides.
-    * `resourcesPath`: (required) The path within the repo to the resources.
-    * `branchName` : (default: master) The branch to use.
-    * `authentication` : (optional) Git authentication configuration. We use token authentication (See https://octokit.github.io/rest.js/v18#authentication).
-    If no authentication is defined, then the source will use the public API, which has rate-limits based on IP source address.
+    * `resourcesPath`: (required) The path on the filesystem to the resource files.
 ### Transformers:
 * **NetlifyMDResourceTransformer** - Transforms documents in Markdown with YML Front-matter format conforming to the r4r-content schema (https://github.com/NCIOCPL/r4r-content/blob/master/admin/config.yml) the
   * Input: An array of documents that follow the r4r-content schema
   * Output: A single record in a format expected by the ElasticResourceLoader
   * Configuration:
     * `mappingUrls` - (required) An object that contains the following properties:
-      * `docs` - (required) The URL to the docs taxonomy
-      * `researchAreas` - (required) The URL to the research areas taxonomy
-      * `researchTypes` - (required) The URL to the research types taxonomy
-      * `toolTypes` - (required) The URL to the tool types taxonomy
+      * `docs` - (required) The path to the docs taxonomy file.
+      * `researchAreas` - (required) The path to the research areas taxonomy file.
+      * `researchTypes` - (required) The path to the research types taxonomy file.
+      * `toolTypes` - (required) The path to the tool types taxonomy file.
 ### Loader:
 * **ElasticResourceLoader** - Loads all records into an Elasticsearch index matching the format of \<aliasName\>\_YYYYMMDD\_HHMMSS. Upon successful completion
   * Input: Documents in a format matching the elasticsearch mapping
@@ -54,7 +50,7 @@ The configuration file is based on the https://github.com/NCIOCPL/loader-pipelin
    1. Install Coverage Gutters extension
    2. Install Jest extension
 4. Setup a local configuration
-   1. create a local.json file in the <importer_root>/config directory
+   1. create a local.json file in the `<importer_root>/config` directory
    2. This file is used to override the default.json options and should look something like:
 ```
 {
@@ -63,15 +59,9 @@ The configuration file is based on the https://github.com/NCIOCPL/loader-pipelin
     },
     "pipeline": {
         "source": {
-            "module": "./lib/sources/github-resource-source",
+            "module": "./lib/sources/filesystem-resource-source",
             "config": {
-                "repoUrl": "https://github.com/nciocpl/r4rcontent",
-                "resourcesPath": "/resources",
-                "branchName": "<YOUR_BRANCH>",
-                "authentication": {
-                    "type": "token",
-                    "token": "<YOUR_AUTH_TOKEN>"
-                }
+                "resourcesPath": "<PATH TO RESOURCE FILES>",
             }
         },
         "loader": {

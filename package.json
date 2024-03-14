@@ -1,6 +1,6 @@
 {
-  "name": "r4rimporter",
-  "version": "1.2.0",
+  "name": "r4r-loader",
+  "version": "3.0.0",
   "description": "Content Importer for the Resources for Researchers API",
   "main": "index.js",
   "scripts": {
@@ -20,35 +20,31 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/NCIOCPL/r4rimporter.git"
+    "url": "git+https://github.com/NCIOCPL/r4r-loader.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/NCIOCPL/r4rimporter/issues"
+    "url": "https://github.com/NCIOCPL/r4r-loader/issues"
   },
   "engines": {
-    "node": ">=16.0.0 <17.0.0",
-    "npm": ">=8.0.0 <9.0.0"
+    "node": ">=20.11.0 <21.0.0"
   },
-  "homepage": "https://github.com/NCIOCPL/r4rimporter#readme",
+  "homepage": "https://github.com/NCIOCPL/r4r-loader#readme",
   "dependencies": {
-    "@elastic/elasticsearch": "^7.17.0",
-    "@octokit/rest": "^19.0.4",
-    "axios": "^0.27.2",
-    "config": "^3.3.8",
-    "elastic-tools": "git+https://github.com/nciocpl/elastic-tools.git#v2.0.0",
+    "@elastic/elasticsearch": "^7.17.13",
+    "config": "^3.3.11",
+    "elastic-tools": "github:nciocpl/elastic-tools#v3.0.0",
     "gray-matter": "^4.0.3",
     "loader-pipeline": "git+https://github.com/nciocpl/loader-pipeline.git#v1.1.0",
-    "moment": "^2.29.4",
-    "parse-github-repo-url": "^1.4.1",
-    "winston": "^3.8.2"
+    "moment": "^2.30.1",
+    "winston": "^3.12.0"
   },
   "devDependencies": {
-    "@types/jest": "^29.0.1",
-    "@types/node": "^16.11.58",
-    "jest": "^29.0.3",
-    "nock": "^13.2.9",
+    "@types/jest": "^29.5.12",
+    "@types/node": "^16.18.89",
+    "jest": "^29.7.0",
+    "nock": "^13.5.4",
     "rehype-preset-minify": "^5.1.0",
     "rehype-stringify": "^8.0.0",
     "remark-parse": "^9.0.0",

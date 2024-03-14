@@ -1,0 +1,7 @@
+[
+    { "label": "Basic", "value": "basic" },
+    { "label": "Translational", "value": "translational" },    
+    { "label": "Clinical Trials", "value": "clinical_trials" },
+    { "label": "Epidemiologic", "value": "epidemiologic" },
+    { "label": "Clinical", "value": "clinical" }
+]
