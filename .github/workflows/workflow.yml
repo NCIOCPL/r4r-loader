@@ -15,6 +15,9 @@ on:
   ## Any pull request. Yes the syntax looks weird
   pull_request:
 
+permissions:
+  contents: read
+
 jobs:
 
 
